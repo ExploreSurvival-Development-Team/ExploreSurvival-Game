@@ -1,2 +1,2 @@
-# Explorecraft Game
+# ExploreSurvival Game
 ## Using the Java language, LWJGL2, OpenGL
