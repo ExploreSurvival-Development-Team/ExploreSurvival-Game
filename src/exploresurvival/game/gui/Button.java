@@ -38,6 +38,7 @@ public class Button extends Component {
 				engine.drawImage(x, y, 0, 46, w / 2, h);
 				engine.drawImage(x+w / 2, y, 200 - this.w / 2, 46, w / 2, h);
 				GuiScreen.drawCenteredString(font, text, x+w/2, y+(h/2-4), 0xa0a0a0);
+				return;
 			}
 			boolean flag = mouseX >= this.x && mouseY >= this.y && mouseX < this.x + this.w && mouseY < this.y + this.h;
 			engine.drawImage(x, y, 0, flag? 86 : 66, w / 2, h);

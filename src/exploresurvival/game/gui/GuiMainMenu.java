@@ -23,6 +23,8 @@ public class GuiMainMenu extends GuiScreen {
 		controls.add(new Button(game,1,10,125,"Settings"));
 		controls.add(new Button(game,2,10,150,"Tutorial"));
 		controls.add(new Button(game,3,10,175,"Exit Game"));
+		((Button)controls.get(0)).enable=false;
+		((Button)controls.get(2)).enable=false;
 	}
 	@Override
 	public void render(int mouseX, int mouseY) {
@@ -45,6 +47,9 @@ public class GuiMainMenu extends GuiScreen {
 		// TODO Auto-generated method stub
 		if(button.id==1) {
 			game.setCurrentScreen(new GuiSettings(game,this));
+		}
+		if(button.id==3) {
+			game.running=false;
 		}
 	}
 

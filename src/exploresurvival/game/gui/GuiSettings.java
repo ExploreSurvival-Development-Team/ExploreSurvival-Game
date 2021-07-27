@@ -18,12 +18,14 @@ public class GuiSettings extends GuiScreen {
 		for (int i = 0; i < settings.settingcount; ++i) {
             this.controls.add(new SettingButton(game, width / 2 - 155 + i % 2 * 160, height / 6 + 24 * (i >> 1), settings, i));
         }
+		this.controls.add(new Button(game, 1, this.width / 2 - 100, this.height / 6 + 168, "Done"));
 	}
 
 	@Override
 	public void onButtonClick(Button button) {
-		// TODO Auto-generated method stub
-		
+		if(button.id==1) {
+			game.setCurrentScreen(parent);
+		}
 	}
 	@Override
 	public void render(int mouseX, int mouseY) {

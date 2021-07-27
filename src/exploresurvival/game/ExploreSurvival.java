@@ -170,7 +170,7 @@ public class ExploreSurvival extends Thread {
 				frames=0;
 				l=System.currentTimeMillis();
 			}
-			running=!Display.isCloseRequested();
+			running=running&&!Display.isCloseRequested();
 			Display.update();
 		}
 	}
