@@ -4,6 +4,7 @@ import exploresurvival.game.ExploreSurvival;
 import exploresurvival.game.render.FontRenderer;
 import exploresurvival.game.render.RenderEngine;
 import exploresurvival.game.render.ShapeRenderer;
+import exploresurvival.game.util.ThreadFetchMessage;
 
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
@@ -43,7 +44,7 @@ public class GuiMainMenu extends GuiScreen {
 			}
 		}
 	}
-	ArrayList<String> msg=new ArrayList<String>();
+	public ArrayList<String> msg=new ArrayList<String>();
 	public void addLine(String s) {
 		int w=(width-20)-(posX+200);
 		w -= w%8;

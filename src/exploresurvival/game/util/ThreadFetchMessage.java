@@ -1,4 +1,4 @@
-package exploresurvival.game.gui;
+package exploresurvival.game.util;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -6,6 +6,8 @@ import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+
+import exploresurvival.game.gui.GuiMainMenu;
 
 public class ThreadFetchMessage extends Thread {
 	private static final URL newsURL;
@@ -43,6 +45,8 @@ public class ThreadFetchMessage extends Thread {
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			guiMainMenu.messages.add("Faild to fetch news.");
+			guiMainMenu.addLine("Faild to fetch news.");
 		}
 	}
 }
