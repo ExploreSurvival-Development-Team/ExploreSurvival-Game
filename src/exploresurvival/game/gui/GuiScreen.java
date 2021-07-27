@@ -7,6 +7,7 @@ import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
 
 import exploresurvival.game.ExploreSurvival;
+import exploresurvival.game.render.FontRenderer;
 import exploresurvival.game.render.ShapeRenderer;
 import exploresurvival.game.util.ScaledResolution;
 
@@ -35,8 +36,8 @@ public abstract class GuiScreen {
 	}
 
 	public void onClose() {
-		for (Component c : controls) {
-			c.onClose();
+		for (int i=0;i<controls.size();i++) {
+			controls.get(i).onClose();
 		}
 	}
 	public void onKeyPress(char eventCharacter, int eventKey) {
@@ -48,8 +49,8 @@ public abstract class GuiScreen {
 
 	public void render(int mouseX, int mouseY) {
 		renderBG();
-		for (Component c : controls) {
-			c.render(mouseX, mouseY);
+		for (int i=0;i<controls.size();i++) {
+			controls.get(i).render(mouseX, mouseY);
 		}
 	}
 
@@ -60,8 +61,8 @@ public abstract class GuiScreen {
 		while (Keyboard.next()) {
 			this.keyboardEvent();
 		}
-		for(Component c:controls) {
-			c.tick();
+		for (int i=0;i<controls.size();i++) {
+			controls.get(i).tick();
 		}
 	}
 
@@ -73,8 +74,8 @@ public abstract class GuiScreen {
 			}
 			this.onKeyPress(Keyboard.getEventCharacter(), Keyboard.getEventKey());
 		}
-		for(Component c:controls) {
-			c.keyboardEvent(this);
+		for (int i=0;i<controls.size();i++) {
+			controls.get(i).keyboardEvent(this);
 		}
 	}
 	public void mouseEvent() {
@@ -84,8 +85,8 @@ public abstract class GuiScreen {
 			int var2 = sr.getScaledHeight() - (Mouse.getEventY() / sr.scaleFactor);
 			this.onMouseClick(var1, var2, Mouse.getEventButton());
 		}
-		for(Component c:controls) {
-			c.mouseEvent(this);
+		for (int i=0;i<controls.size();i++) {
+			controls.get(i).mouseEvent(this);
 		}
 	}
 	private void renderBG() {
@@ -106,5 +107,7 @@ public abstract class GuiScreen {
 	      var5.vertexUV(0.0F, 0.0F, 0.0F, 0.0F, 0.0F);
 	      var5.end();
 	   }
-
+	public static void drawCenteredString(final FontRenderer var0, final String var1, final int var2, final int var3, final int var4) {
+        var0.render(var1, var2 - var0.getWidth(var1) / 2, var3, var4);
+    }
 }

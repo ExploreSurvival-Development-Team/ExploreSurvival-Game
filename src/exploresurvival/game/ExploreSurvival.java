@@ -1,5 +1,6 @@
 package exploresurvival.game;
 
+import java.io.File;
 import java.io.IOException;
 
 import org.lwjgl.LWJGLException;
@@ -11,19 +12,17 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.glu.GLU;
 
 import exploresurvival.game.gui.GuiScreen;
-import exploresurvival.game.gui.GuiScreenMainMenu;
+import exploresurvival.game.gui.GuiMainMenu;
 import exploresurvival.game.render.FontRenderer;
 import exploresurvival.game.render.RenderEngine;
 import exploresurvival.game.util.GameSettings;
 import exploresurvival.game.util.ScaledResolution;
 
 public class ExploreSurvival extends Thread {
-	private boolean fullscreen;
 	public ExploreSurvival() {
 		running=true;
 		instance=this;
 	}
-	private static ExploreSurvival instance;
 	public static ExploreSurvival getInstance() {
 		return instance;
 	}
@@ -36,9 +35,12 @@ public class ExploreSurvival extends Thread {
             System.out.println(errorCode + ": " + errorString);
         }
     }
+    private static ExploreSurvival instance;
 	public RenderEngine renderengine;
 	public FontRenderer fontrenderer;
 	public GameSettings gamesettings;
+	private boolean fullscreen;
+	public static final File SETTINGFILE=new File("settings.json");
 	
 	public GuiScreen currentScreen;
 	public void setCurrentScreen(GuiScreen screen) {
@@ -61,8 +63,25 @@ public class ExploreSurvival extends Thread {
 		width=Display.getWidth();
 		height=Display.getHeight();
 		renderengine=new RenderEngine();
-		gamesettings=new GameSettings();
-		fontrenderer=new FontRenderer("/default.png", renderengine);
+		if(ExploreSurvival.SETTINGFILE.exists())
+			try {
+				gamesettings=GameSettings.loadSettings();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				System.out.println("Faild to load settings.");
+				e.printStackTrace();
+			}
+		if(gamesettings==null) {
+			gamesettings=new GameSettings();
+			try {
+				gamesettings.saveSettings();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				System.out.println("Faild to save settings.");
+				e.printStackTrace();
+			}
+		}
+		fontrenderer=new FontRenderer("/default.gif", renderengine);
 		ScaledResolution sr=new ScaledResolution();
 		GL11.glViewport(0, 0, width, height);
 		GL11.glClear(256);
@@ -73,7 +92,7 @@ public class ExploreSurvival extends Thread {
         GL11.glLoadIdentity();
         GL11.glTranslatef(0.0F, 0.0F, -200.0F);
         GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-		setCurrentScreen(new GuiScreenMainMenu(this));
+		setCurrentScreen(new GuiMainMenu(this));
 	}
 	public boolean running=false;
 	long start;

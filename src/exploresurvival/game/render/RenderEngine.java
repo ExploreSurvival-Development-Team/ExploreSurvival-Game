@@ -74,7 +74,4 @@ public class RenderEngine {
 	      var9.vertexUV((float)var1, (float)var2, this.imgZ, (float)var3 * 0.00390625F, (float)var4 * 0.00390625F);
 	      var9.end();
 	   }
-	public static void drawCenteredString(final FontRenderer var0, final String var1, final int var2, final int var3, final int var4) {
-        var0.render(var1, var2 - var0.getWidth(var1) / 2, var3, var4);
-    }
 }
