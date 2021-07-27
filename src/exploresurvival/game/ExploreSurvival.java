@@ -39,8 +39,8 @@ public class ExploreSurvival extends Thread {
         }
     }
     private static ExploreSurvival instance;
-	public RenderEngine renderengine;
-	public FontRenderer fontrenderer;
+	public RenderEngine renderEngine;
+	public FontRenderer fontRenderer;
 	public GameSettings gamesettings;
 	private boolean fullscreen;
 	public static final File SETTINGFILE=new File("settings.json");
@@ -67,7 +67,7 @@ public class ExploreSurvival extends Thread {
 		Mouse.create();
 		width=Display.getWidth();
 		height=Display.getHeight();
-		renderengine=new RenderEngine();
+		renderEngine=new RenderEngine();
 		if(ExploreSurvival.SETTINGFILE.exists())
 			try {
 				gamesettings=GameSettings.loadSettings();
@@ -86,7 +86,7 @@ public class ExploreSurvival extends Thread {
 				e.printStackTrace();
 			}
 		}
-		fontrenderer=new FontRenderer("/default.gif", renderengine);
+		fontRenderer=new FontRenderer("/default.gif", renderEngine);
 		ScaledResolution sr=new ScaledResolution();
 		GL11.glViewport(0, 0, width, height);
 		GL11.glClear(256);
@@ -161,7 +161,7 @@ public class ExploreSurvival extends Thread {
 	    				}
 	    			}
 	            }
-				fontrenderer.render("ExploreSurvival ("+this.frames+" frames)", 2, 2, 0xFFFFFF);
+				fontRenderer.render("ExploreSurvival ("+this.frames+" frames)", 2, 2, 0xFFFFFF);
 				GL11.glPopMatrix();
 				checkGlError("render 2d");
 				if(gamesettings.limitFrames) {

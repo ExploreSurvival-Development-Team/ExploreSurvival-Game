@@ -39,6 +39,7 @@ public abstract class GuiScreen {
 		for (int i=0;i<controls.size();i++) {
 			controls.get(i).onClose();
 		}
+		controls.clear();
 	}
 	public void onKeyPress(char eventCharacter, int eventKey) {
 
@@ -95,7 +96,7 @@ public abstract class GuiScreen {
 	      int var4 = sr.getScaledHeight();
 	      GL11.glClear(16640);
 	      ShapeRenderer var5 = ShapeRenderer.instance;
-	      int var6 = game.renderengine.getTexture("/background.png");
+	      int var6 = game.renderEngine.getTexture("/background.png");
 	      GL11.glBindTexture(3553, var6);
 	      GL11.glColor4f(1, 1, 1, 1);
 	      float var7 = 32.0F;

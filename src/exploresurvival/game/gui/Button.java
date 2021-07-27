@@ -31,8 +31,8 @@ public class Button extends Component {
 	@Override
 	public void render(int mouseX, int mouseY) {
 		if(visible) {
-			FontRenderer font=game.fontrenderer;
-			RenderEngine engine=game.renderengine;
+			FontRenderer font=game.fontRenderer;
+			RenderEngine engine=game.renderEngine;
 			GL11.glBindTexture(GL11.GL_TEXTURE_2D, engine.getTexture("/gui.png"));
 			boolean flag = (mouseX >= this.x && mouseY >= this.y && mouseX < this.x + this.w && mouseY < this.y + this.h)&&enable;
 			if(flag) {

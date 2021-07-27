@@ -24,13 +24,13 @@ public class GuiSettings extends GuiScreen {
 	@Override
 	public void onButtonClick(Button button) {
 		if(button.id==1) {
-			game.currentScreen=parent;
+			game.setCurrentScreen(parent);
 		}
 	}
 	@Override
 	public void render(int mouseX, int mouseY) {
 		super.render(mouseX, mouseY);
-		this.drawCenteredString(game.fontrenderer, "Settings", width/2, 20, 0xffffff);
+		this.drawCenteredString(game.fontRenderer, "Settings", width/2, 20, 0xffffff);
 	}
 
 }

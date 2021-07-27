@@ -11,6 +11,9 @@ import java.awt.*;
 
 public class GuiMainMenu extends GuiScreen {
 
+	private String splashText="ExploreSurvival!";
+
+
 	public GuiMainMenu(ExploreSurvival game) {
 		super(game);
 		// TODO Auto-generated constructor stub
@@ -29,8 +32,9 @@ public class GuiMainMenu extends GuiScreen {
 	@Override
 	public void render(int mouseX, int mouseY) {
 		super.render(mouseX, mouseY);
-		GL11.glBindTexture(GL11.GL_TEXTURE_2D, game.renderengine.getTexture("/logo.png"));
+		GL11.glBindTexture(GL11.GL_TEXTURE_2D, game.renderEngine.getTexture("/logo.png"));
 		ShapeRenderer s=ShapeRenderer.instance;
+		GL11.glPushMatrix();
 		s.begin();
 		int posY=30;
 		int posZ=27;
@@ -39,6 +43,8 @@ public class GuiMainMenu extends GuiScreen {
 		s.vertexUV(posZ+331/2, posY+130/2, 0, 1, 1);
 		s.vertexUV(posZ, posY+130/2, 0, 0, 1);
 		s.end();
+		GL11.glPopMatrix();
+		
 	}
 	
 

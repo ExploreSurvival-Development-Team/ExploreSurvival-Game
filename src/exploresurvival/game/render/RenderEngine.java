@@ -73,5 +73,5 @@ public class RenderEngine {
 	      var9.vertexUV((float)(var1 + var5), (float)var2, this.imgZ, (float)(var3 + var5) * 0.00390625F, (float)var4 * 0.00390625F);
 	      var9.vertexUV((float)var1, (float)var2, this.imgZ, (float)var3 * 0.00390625F, (float)var4 * 0.00390625F);
 	      var9.end();
-	   }
+	}
 }
