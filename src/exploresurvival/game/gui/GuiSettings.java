@@ -24,7 +24,7 @@ public class GuiSettings extends GuiScreen {
 	@Override
 	public void onButtonClick(Button button) {
 		if(button.id==1) {
-			game.setCurrentScreen(parent);
+			game.currentScreen=parent;
 		}
 	}
 	@Override
