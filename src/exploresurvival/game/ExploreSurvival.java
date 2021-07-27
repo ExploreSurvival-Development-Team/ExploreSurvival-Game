@@ -62,7 +62,7 @@ public class ExploreSurvival extends Thread {
 		height=Display.getHeight();
 		renderengine=new RenderEngine();
 		gamesettings=new GameSettings();
-		fontrenderer=new FontRenderer("/default.gif", renderengine);
+		fontrenderer=new FontRenderer("/default.png", renderengine);
 		ScaledResolution sr=new ScaledResolution();
 		GL11.glViewport(0, 0, width, height);
 		GL11.glClear(256);
