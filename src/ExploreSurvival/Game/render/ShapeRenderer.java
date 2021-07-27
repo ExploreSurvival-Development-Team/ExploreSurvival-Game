@@ -1,4 +1,4 @@
-package ExploreSurvival.Game.render;
+package exploresurvival.game.render;
 
 import java.nio.*;
 import org.lwjgl.*;

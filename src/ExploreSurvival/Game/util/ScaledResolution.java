@@ -1,6 +1,6 @@
-package ExploreSurvival.Game.util;
+package exploresurvival.game.util;
 
-import ExploreSurvival.Game.ExploreSurvival;
+import exploresurvival.game.ExploreSurvival;
 
 public class ScaledResolution
 {

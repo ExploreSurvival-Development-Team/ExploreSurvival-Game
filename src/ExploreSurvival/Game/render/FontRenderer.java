@@ -1,4 +1,4 @@
-package ExploreSurvival.Game.render;
+package exploresurvival.game.render;
 
 import org.lwjgl.opengl.GL11;
 
@@ -12,7 +12,7 @@ public final class FontRenderer
     private final int[] widthmap;
     private int fontTexture;
 
-    public FontRenderer(final String var2, final RenderEngine var3) throws IOException {
+    public FontRenderer(final String var2, final RenderEngine var3) {
         this.widthmap = new int[256];
         this.fontTexture = 0;
         BufferedImage var4;
