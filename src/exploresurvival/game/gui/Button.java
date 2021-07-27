@@ -34,16 +34,20 @@ public class Button extends Component {
 			FontRenderer font=game.fontrenderer;
 			RenderEngine engine=game.renderengine;
 			GL11.glBindTexture(GL11.GL_TEXTURE_2D, engine.getTexture("/gui.png"));
+			boolean flag = (mouseX >= this.x && mouseY >= this.y && mouseX < this.x + this.w && mouseY < this.y + this.h)&&enable;
+			if(flag) {
+				GL11.glColor4f(.75F, .75F, 1F, 1F);
+			}
 			if(!enable) {
 				engine.drawImage(x, y, 0, 46, w / 2, h);
 				engine.drawImage(x+w / 2, y, 200 - this.w / 2, 46, w / 2, h);
 				GuiScreen.drawCenteredString(font, text, x+w/2, y+(h/2-4), 0xa0a0a0);
 				return;
 			}
-			boolean flag = mouseX >= this.x && mouseY >= this.y && mouseX < this.x + this.w && mouseY < this.y + this.h;
 			engine.drawImage(x, y, 0, flag? 86 : 66, w / 2, h);
 			engine.drawImage(x+w / 2, y, 200 - this.w / 2, flag? 86 : 66, w / 2, h);
 			GuiScreen.drawCenteredString(font, text, x+w/2, y+(h/2-4), flag ? 0xffffa0 : 0xe0e0e0);
+			GL11.glColor4f(1F, 1F, 1F, 1F);
 		}
 	}
 

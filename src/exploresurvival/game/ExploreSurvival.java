@@ -139,6 +139,7 @@ public class ExploreSurvival extends Thread {
                 int screenHeight = sr.getScaledHeight();
                 int xMouse = Mouse.getX() * screenWidth / this.width;
                 int yMouse = screenHeight - Mouse.getY() * screenHeight / this.height - 1;
+                GL11.glColor4f(1F, 1F, 1F, 1F);
             	currentScreen.render(xMouse, yMouse);
             	currentScreen.tick();
             } else {
