@@ -45,8 +45,8 @@ public class ThreadFetchMessage extends Thread {
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			guiMainMenu.messages.add("Faild to fetch news.");
-			guiMainMenu.addLine("Faild to fetch news.");
+			guiMainMenu.messages.add("Failed to fetch news.");
+			guiMainMenu.addLine("Failed to fetch news.");
 		}
 	}
 }

@@ -73,7 +73,7 @@ public class ExploreSurvival extends Thread {
 				gamesettings=GameSettings.loadSettings();
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
-				System.out.println("Faild to load settings.");
+				System.out.println("Failed to load settings.");
 				e.printStackTrace();
 			}
 		if(gamesettings==null) {
@@ -82,7 +82,7 @@ public class ExploreSurvival extends Thread {
 				gamesettings.saveSettings();
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
-				System.out.println("Faild to save settings.");
+				System.out.println("Failed to save settings.");
 				e.printStackTrace();
 			}
 		}
