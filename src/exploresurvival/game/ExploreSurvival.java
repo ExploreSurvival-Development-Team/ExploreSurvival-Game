@@ -161,6 +161,7 @@ public class ExploreSurvival extends Thread {
 	    				}
 	    			}
 	            }
+	            
 				fontRenderer.render("ExploreSurvival ("+this.frames+" frames)", 2, 2, 0xFFFFFF);
 				GL11.glPopMatrix();
 				checkGlError("render 2d");
