@@ -1,4 +1,4 @@
-package exploresurvival.game.world.render;
+package exploresurvival.game.render;
 import java.util.ArrayList;
 import java.util.Iterator;
 

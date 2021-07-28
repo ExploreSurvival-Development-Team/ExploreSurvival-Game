@@ -1,7 +1,8 @@
 package exploresurvival.game.world;
 
+import exploresurvival.game.render.Model;
+import exploresurvival.game.util.AABB;
 import exploresurvival.game.util.BlockPos;
-import exploresurvival.game.world.render.Model;
 
 public class Block {
     public Model model;

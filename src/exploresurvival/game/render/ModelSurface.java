@@ -1,4 +1,4 @@
-package exploresurvival.game.world.render;
+package exploresurvival.game.render;
 
 public class ModelSurface {
 
