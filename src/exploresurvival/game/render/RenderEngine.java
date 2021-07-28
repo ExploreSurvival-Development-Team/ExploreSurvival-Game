@@ -14,7 +14,7 @@ import org.lwjgl.opengl.GL11;
 public class RenderEngine {
 	private Hashtable<String,Integer> textures=new Hashtable<String,Integer>();
 	private ByteBuffer imageData = ByteBuffer.allocateDirect(0xFFFFFF);
-	private IntBuffer singleIntBuffer = ByteBuffer.allocateDirect(Integer.BYTES).asIntBuffer();
+	//private IntBuffer singleIntBuffer = ByteBuffer.allocateDirect(Integer.BYTES).asIntBuffer();
 	protected float imgZ;
 	public void setupTexture(BufferedImage image,int id) {
 		GL11.glBindTexture(GL11.GL_TEXTURE_2D, id);
@@ -45,9 +45,9 @@ public class RenderEngine {
 		GL11.glTexImage2D(GL11.GL_TEXTURE_2D, 0, GL11.GL_RGBA, image.getWidth(), image.getHeight(), 0, GL11.GL_RGBA, GL11.GL_UNSIGNED_BYTE, this.imageData);
 	}
 	public int allocateAndSetupTexture(BufferedImage image) {
-		singleIntBuffer.clear();
-		GL11.glGenTextures(singleIntBuffer);
-		int id=singleIntBuffer.get(0);
+		//singleIntBuffer.clear();
+		int id=GL11.glGenTextures();
+		//int id=singleIntBuffer.get(0);
 		setupTexture(image,id);
 		return id;
 	}

@@ -178,6 +178,7 @@ public class ExploreSurvival extends Thread {
 				running=running&&!Display.isCloseRequested();
 				Display.update();
 			}
+			System.exit(0);
 		} catch(Throwable e) {
 			e.printStackTrace();
 			new PanelCrashReport(e);

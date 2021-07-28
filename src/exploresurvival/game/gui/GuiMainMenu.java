@@ -78,7 +78,7 @@ public class GuiMainMenu extends GuiScreen {
 			GL11.glEnable(GL11.GL_BLEND);
 			int wheel=scoll;
 			synchronized(msg) {
-				for(String str:msg.toArray(new String[0])) {
+				for(String str:msg) {
 					if(wheel-->0) continue;
 					game.fontRenderer.render(str, posX+200, y, 0xFFFFFF);
 					y+=8;
