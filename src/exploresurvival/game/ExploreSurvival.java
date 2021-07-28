@@ -1,10 +1,6 @@
 package exploresurvival.game;
 
 import java.io.File;
-import java.io.IOException;
-
-import javax.swing.JFrame;
-
 import org.lwjgl.LWJGLException;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;

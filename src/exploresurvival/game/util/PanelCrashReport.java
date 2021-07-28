@@ -17,6 +17,11 @@ import org.lwjgl.opengl.Display;
 
 
 public class PanelCrashReport extends Panel {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -9208444556823269586L;
+
 	public PanelCrashReport(Throwable e) {
 		super();
 		System.gc();

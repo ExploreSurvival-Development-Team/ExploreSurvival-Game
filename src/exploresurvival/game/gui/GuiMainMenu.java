@@ -1,15 +1,12 @@
 package exploresurvival.game.gui;
 
 import exploresurvival.game.ExploreSurvival;
-import exploresurvival.game.render.FontRenderer;
-import exploresurvival.game.render.RenderEngine;
 import exploresurvival.game.render.ShapeRenderer;
 import exploresurvival.game.util.ThreadFetchMessage;
 
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
 
-import java.awt.*;
 import java.util.ArrayList;
 
 public class GuiMainMenu extends GuiScreen {
