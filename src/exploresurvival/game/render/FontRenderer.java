@@ -84,8 +84,8 @@ public final class FontRenderer
                     }
                     var7.color(var4);
                 }
-                var4 = var6[var9] % '\u0010' << 3;
-                int var10 = var6[var9] / '\u0010' << 3;
+                var4 = var6[var9] % 16 << 3;
+                int var10 = var6[var9] / 16 << 3;
                 final float var13 = 7.99f;
                 var7.vertexUV((float)(var2 + var8), var3 + var13, 0.0f, var4 / 128.0f, (var10 + var13) / 128.0f);
                 var7.vertexUV(var2 + var8 + var13, var3 + var13, 0.0f, (var4 + var13) / 128.0f, (var10 + var13) / 128.0f);

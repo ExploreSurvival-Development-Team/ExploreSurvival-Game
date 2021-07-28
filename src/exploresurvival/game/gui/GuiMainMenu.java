@@ -37,7 +37,7 @@ public class GuiMainMenu extends GuiScreen {
 		((Button)controls.get(0)).enable=false;
 		((Button)controls.get(2)).enable=false;
 		new ThreadFetchMessage(this).start();
-		if(messages!=null) {
+		if(messages!=null&&(width-20)-(posX+200)>8) {
 			msg.clear();
 			for(String s:messages) {
 				addLine(s);
@@ -48,6 +48,7 @@ public class GuiMainMenu extends GuiScreen {
 	public void addLine(String s) {
 		int w=(width-20)-(posX+200);
 		w -= w%8;
+		if(w<8) return;
 		int i;
         for(; game.fontRenderer.getWidth(s) > w; s = s.substring(i))
         {
@@ -80,7 +81,7 @@ public class GuiMainMenu extends GuiScreen {
 			GL11.glEnable(GL11.GL_BLEND);
 			int wheel=scoll;
 			synchronized(msg) {
-				for(String str:msg) {
+				for(String str:msg.toArray(new String[0])) {
 					if(wheel-->0) continue;
 					game.fontRenderer.render(str, posX+200, y, 0xFFFFFF);
 					y+=8;

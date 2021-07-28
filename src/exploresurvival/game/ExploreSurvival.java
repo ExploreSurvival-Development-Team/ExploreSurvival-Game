@@ -86,7 +86,7 @@ public class ExploreSurvival extends Thread {
 				e.printStackTrace();
 			}
 		}
-		fontRenderer=new FontRenderer("/default.gif", renderEngine);
+		fontRenderer=new FontRenderer("/default.png", renderEngine);
 		ScaledResolution sr=new ScaledResolution();
 		GL11.glViewport(0, 0, width, height);
 		GL11.glClear(256);
@@ -119,7 +119,7 @@ public class ExploreSurvival extends Thread {
 			while(running) {
 				start=System.currentTimeMillis();
 				GL11.glClear(256);
-				if(width!=Display.getWidth()||height!=Display.getHeight()) {
+				if((width!=Display.getWidth()||height!=Display.getHeight())&&(Display.getWidth()>0&&Display.getHeight()>0)) {
 					width=Display.getWidth();
 					height=Display.getHeight();
 					ScaledResolution sr=new ScaledResolution();

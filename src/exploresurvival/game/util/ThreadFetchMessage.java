@@ -36,17 +36,27 @@ public class ThreadFetchMessage extends Thread {
 			in = new BufferedReader(new InputStreamReader(
                     conn.getInputStream()));
 			String line;
+			synchronized(guiMainMenu.msg) {
+				guiMainMenu.msg.clear();
+			}
 			guiMainMenu.messages.clear();
-			guiMainMenu.msg.clear();
 			while((line=in.readLine())!=null) {
 				guiMainMenu.messages.add(line);
-				guiMainMenu.addLine(line);
+				synchronized(guiMainMenu.msg) {
+					guiMainMenu.addLine(line);
+				}
+				
 			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			guiMainMenu.messages.add("Failed to fetch news.");
-			guiMainMenu.addLine("Failed to fetch news.");
+			synchronized(guiMainMenu.msg) {
+				if(guiMainMenu.msg.size()==0||!guiMainMenu.msg.get(guiMainMenu.msg.size()-1).equals("Failed to fetch news.")) {
+					guiMainMenu.messages.add("Failed to fetch news.");
+					guiMainMenu.addLine("Failed to fetch news.");
+				}
+			}
+			
 		}
 	}
 }
