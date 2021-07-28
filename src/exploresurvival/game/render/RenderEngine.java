@@ -20,6 +20,8 @@ public class RenderEngine {
 		GL11.glBindTexture(GL11.GL_TEXTURE_2D, id);
 		GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER, GL11.GL_NEAREST);
 		GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MAG_FILTER, GL11.GL_NEAREST);
+        GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_S, GL11.GL_REPEAT);
+        GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_T, GL11.GL_REPEAT);
 		int[] intbuffer=new int[image.getWidth()*image.getHeight()];
 		byte[] bytebuffer=new byte[image.getWidth()*image.getHeight()*4];
 		image.getRGB(0, 0, image.getWidth(), image.getHeight(), intbuffer, 0, image.getWidth());
