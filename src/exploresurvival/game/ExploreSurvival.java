@@ -126,6 +126,7 @@ public class ExploreSurvival extends Thread {
 			e.printStackTrace();
 			new PanelCrashReport(e);
 			running=false;
+			return;
 		}
 		try {
 			while(running) {
