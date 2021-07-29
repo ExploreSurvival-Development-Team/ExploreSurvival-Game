@@ -17,8 +17,6 @@ import exploresurvival.game.gui.GuiMainMenu;
 
 public class ThreadFetchMessage extends Thread {
 	private static final URL newsURL;
-	private static FileHandler fileHandler;
-	private static Logger logger = Logger.getLogger(ExploreSurvival.class.getName());
 	GuiMainMenu guiMainMenu;
 	static {
 		URL url;
@@ -35,21 +33,10 @@ public class ThreadFetchMessage extends Thread {
 		this.guiMainMenu=guiMainMenu;
 	}
 	public void run() {
-		LocalDateTime dateTime = LocalDateTime.now(); // get the current time
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy-HH.mm.ss");
-		try {
-			fileHandler = new FileHandler();
-		} catch (IOException e) {
-			logger.severe("Unable to write to log file");
-			e.printStackTrace();
-		}
-		fileHandler.setFormatter(new LoggerCustomFormatter());
-		logger.setLevel(Level.ALL);
-		logger.addHandler(fileHandler);
 		if(newsURL==null) return;
 		BufferedReader in;
 		try {
-			logger.info("Load news in " + newsURL);
+			ExploreSurvival.logger.info("Load news in " + newsURL);
 			URLConnection conn = newsURL.openConnection();
 			conn.setDoInput(true);
 			conn.connect();
@@ -72,7 +59,7 @@ public class ThreadFetchMessage extends Thread {
 			e.printStackTrace();
 			synchronized(guiMainMenu.msg) {
 				if(guiMainMenu.msg.size()==0||!guiMainMenu.msg.get(guiMainMenu.msg.size()-1).equals("Failed to fetch news.")) {
-					logger.severe("Unable to load news in " + newsURL);
+					ExploreSurvival.logger.severe("Unable to load news in " + newsURL);
 					guiMainMenu.messages.add("Failed to fetch news.");
 					guiMainMenu.addLine("Failed to fetch news.");
 				}

@@ -5,15 +5,24 @@ import exploresurvival.game.util.AABB;
 import exploresurvival.game.util.BlockPos;
 
 public class Block {
-    public Model model;
-    public BlockPos pos;
-    public String name;
-    public AABB blockAABB;
+    private Model model;
+    private String name;
+    public final byte blockID;
+    public static final Block[] blockList=new Block[256];
 
-    public Block(String name, BlockPos pos, Model model, AABB aabb) {
+    public Block(byte id,String name,Model model) {
         this.name =name;
-        this.pos = pos;
         this.model =model;
-        this.blockAABB =aabb;
+        blockID=id;
+        blockList[id]=this;
+    }
+    public AABB getBlockAABB(BlockPos pos) {
+    	return new AABB(pos.x,pos.y,pos.z,pos.x+1,pos.y+1,pos.z+1);
+    }
+    public Model getModel() {
+    	return model;
+    }
+    public String getName() {
+    	return name;
     }
 }

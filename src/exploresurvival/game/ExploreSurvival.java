@@ -10,8 +10,8 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.glu.GLU;
 
 import java.io.IOException;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.logging.FileHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -28,7 +28,7 @@ import exploresurvival.game.util.ScaledResolution;
 public class ExploreSurvival extends Thread {
 
 	private static FileHandler fileHandler;
-	private static final Logger logger = Logger.getLogger(ExploreSurvival.class.getName());
+	public static final Logger logger = Logger.getLogger(ExploreSurvival.class.getName());
 	public static final String version="indev-210729_03";
 	public ExploreSurvival() {
 		running=true;
@@ -223,10 +223,8 @@ public class ExploreSurvival extends Thread {
 		if(!mkdirLogsDir .exists()) {
 			mkdirLogsDir.mkdir(); // 创建目录
 		}
-		LocalDateTime dateTime = LocalDateTime.now(); // get the current time
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-dd-MM-HH.mm.ss");
 		try {
-			fileHandler = new FileHandler(".\\logs\\log-" + dateTime.format(formatter) + ".log");
+			fileHandler = new FileHandler(".\\logs\\log-" + new SimpleDateFormat("yyyy-dd-MM-HH.mm.ss").format(new Date(System.currentTimeMillis())) + ".log");
 			logger.info("The log file was successfully written.");
 		} catch (IOException e) {
 			logger.severe("Unable to write to log file");
