@@ -9,19 +9,32 @@ import org.lwjgl.opengl.DisplayMode;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.glu.GLU;
 
+import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.logging.FileHandler;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import exploresurvival.game.gui.GuiScreen;
 import exploresurvival.game.gui.GuiMainMenu;
 import exploresurvival.game.render.FontRenderer;
 import exploresurvival.game.render.RenderEngine;
 import exploresurvival.game.util.GameSettings;
+import exploresurvival.game.util.LoggerCustomFormatter;
 import exploresurvival.game.util.PanelCrashReport;
 import exploresurvival.game.util.ScaledResolution;
 
 public class ExploreSurvival extends Thread {
+
+	private static FileHandler fileHandler;
+	private static final Logger logger = Logger.getLogger(ExploreSurvival.class.getName());
+	public static final String version="indev-210729_03";
 	public ExploreSurvival() {
 		running=true;
 		instance=this;
 	}
+
 	public static ExploreSurvival getInstance() {
 		return instance;
 	}
@@ -66,22 +79,25 @@ public class ExploreSurvival extends Thread {
 		renderEngine=new RenderEngine();
 		if(ExploreSurvival.SETTINGFILE.exists())
 			try {
+				logger.info("Read Settings in " + SETTINGFILE);
 				gamesettings=GameSettings.loadSettings();
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
-				System.out.println("Failed to load settings.");
+				logger.severe("Unable to read Settings in " + SETTINGFILE);
 				e.printStackTrace();
 			}
 		if(gamesettings==null) {
 			gamesettings=new GameSettings();
 			try {
+				logger.info("Save Settings in " + SETTINGFILE);
 				gamesettings.saveSettings();
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
-				System.out.println("Failed to save settings.");
+				logger.severe("Unable to save Settings in " + SETTINGFILE);
 				e.printStackTrace();
 			}
 		}
+		Display.setVSyncEnabled(gamesettings.limitFrames);
 		fontRenderer=new FontRenderer("/default.png", renderEngine);
 		ScaledResolution sr=new ScaledResolution();
 		GL11.glViewport(0, 0, width, height);
@@ -97,7 +113,7 @@ public class ExploreSurvival extends Thread {
 	}
 	public boolean running=false;
 	long start;
-	int maxframes=60;
+	//int maxframes=60;
 	public int width,height;
 	private int frames;
 	public void run() {
@@ -158,17 +174,17 @@ public class ExploreSurvival extends Thread {
 	    			}
 	            }
 	            
-				fontRenderer.render("ExploreSurvival ("+this.frames+" frames)", 2, 2, 0xFFFFFF);
+				fontRenderer.render("ExploreSurvival "+version+" ("+this.frames+" fps)", 2, 2, 0xFFFFFF);
 				GL11.glPopMatrix();
 				checkGlError("render 2d");
-				if(gamesettings.limitFrames) {
+				/*if(gamesettings.limitFrames) {
 					try {
 						sleep((long) Math.max((1F/maxframes*1000F)-(System.currentTimeMillis()-start), 0));
 					} catch (InterruptedException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
-				}
+				}*/
 				frames++;
 				if(System.currentTimeMillis()-l>=1000L) {
 					this.frames=frames;
@@ -201,7 +217,24 @@ public class ExploreSurvival extends Thread {
 		}
 	}
 	public static void main(String[] args) {
-        //System.out.println("Hello World!");
+		File mkdirLogsDir = new File(".\\logs\\");
+		if(!mkdirLogsDir .exists()) {
+			mkdirLogsDir.mkdir(); // 创建目录
+		}
+		LocalDateTime dateTime = LocalDateTime.now(); // get the current time
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-dd-MM-HH.mm.ss");
+		try {
+			fileHandler = new FileHandler(".\\logs\\log-" + dateTime.format(formatter) + ".log");
+			logger.info("The log file was successfully written.");
+		} catch (IOException e) {
+			logger.severe("Unable to write to log file");
+			e.printStackTrace();
+		}
+		logger.setLevel(Level.ALL);
+		fileHandler.setFormatter(new LoggerCustomFormatter());
+		logger.addHandler(fileHandler);
         new ExploreSurvival().start();
+		logger.info("Launching ExploreSurvival "+version);
+		logger.fine("Launching ExploreSurvival in " + ExploreSurvival.class.getName());
     }
 }

@@ -78,6 +78,7 @@ public class GameSettings {
 			break;
 		case 1:
 			limitFrames=!limitFrames;
+			Display.setVSyncEnabled(limitFrames);
 			break;
 		}
 		if(id==0&&ExploreSurvival.getInstance().currentScreen!=null) {
