@@ -13,7 +13,6 @@ public class World {
 		return loadChunk(x,z);
 	}
 	private Chunk loadChunk(long x, long z) {
-		// TODO Auto-generated method stub
 		Chunk c=genChunk(x,z);
 		loadedChunks.add(c);
 		return c;

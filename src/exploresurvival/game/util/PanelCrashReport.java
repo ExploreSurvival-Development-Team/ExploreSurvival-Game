@@ -22,11 +22,7 @@ import org.lwjgl.opengl.Display;
 
 
 public class PanelCrashReport extends Panel {
-	/**
-	 * 
-	 */
-	private static FileHandler fileHandler;
-	private static Logger logger = Logger.getLogger(ExploreSurvival.class.getName());
+
 	private static final long serialVersionUID = -9208444556823269586L;
 
 	public PanelCrashReport(Throwable e) {
@@ -35,19 +31,6 @@ public class PanelCrashReport extends Panel {
 		this.setBackground(new Color(0x2e3444));
 		this.setLayout(new BorderLayout());
 		StringWriter sw=new StringWriter();
-		try {
-			fileHandler = new FileHandler();
-		} catch (IOException ioException) {
-			logger.severe("Unable to write to log file");
-			ioException.printStackTrace();
-		}
-		logger.severe("ExploreSurvival has crashed!");
-		logger.severe("----------------------------");
-		logger.severe("ExploreSurvival has stopped running because it encountered a problem.");
-		logger.severe("You can report on https://github.com/ExploreSurvival-Development-Team/ExploreSurvival-Game/issues. There is Game log");
-		logger.fine("--- Begin Error Report");
-		logger.fine(e.toString());
-		logger.fine("--- End Error Report");
 		sw.append("ExploreSurvival has crashed!      \n");
 		sw.append("----------------------------      \n");
 		sw.append("\n");
