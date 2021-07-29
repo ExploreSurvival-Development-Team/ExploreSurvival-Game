@@ -6,14 +6,13 @@ import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.logging.FileHandler;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import exploresurvival.game.ExploreSurvival;
 import exploresurvival.game.gui.GuiMainMenu;
+
+import static exploresurvival.game.ExploreSurvival.SETTINGFILE;
 
 public class ThreadFetchMessage extends Thread {
 	private static final URL newsURL;
@@ -60,6 +59,12 @@ public class ThreadFetchMessage extends Thread {
 			synchronized(guiMainMenu.msg) {
 				if(guiMainMenu.msg.size()==0||!guiMainMenu.msg.get(guiMainMenu.msg.size()-1).equals("Failed to fetch news.")) {
 					ExploreSurvival.logger.severe("Unable to load news in " + newsURL);
+					ExploreSurvival.logger.fine("Cause : " + e.toString());
+					ExploreSurvival.logger.fine("---- Begin Warning");
+					ExploreSurvival.logger.fine("You can't get ExploreSurvival news.");
+					ExploreSurvival.logger.fine("That means you can't get the latest news and updates on ExploreSurvival.");
+					ExploreSurvival.logger.fine("If you don't have an Internet connection, ignore this warning");
+					ExploreSurvival.logger.fine("---- End Warning");
 					guiMainMenu.messages.add("Failed to fetch news.");
 					guiMainMenu.addLine("Failed to fetch news.");
 				}

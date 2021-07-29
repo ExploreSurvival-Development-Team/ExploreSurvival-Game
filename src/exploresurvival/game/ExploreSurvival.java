@@ -1,6 +1,8 @@
 package exploresurvival.game;
 
 import java.io.File;
+
+import exploresurvival.game.util.LoggerCustomFormatter;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
@@ -10,8 +12,8 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.glu.GLU;
 
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.logging.FileHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -21,15 +23,14 @@ import exploresurvival.game.gui.GuiMainMenu;
 import exploresurvival.game.render.FontRenderer;
 import exploresurvival.game.render.RenderEngine;
 import exploresurvival.game.util.GameSettings;
-import exploresurvival.game.util.LoggerCustomFormatter;
 import exploresurvival.game.util.PanelCrashReport;
 import exploresurvival.game.util.ScaledResolution;
 
 public class ExploreSurvival extends Thread {
 
 	private static FileHandler fileHandler;
-	public static final Logger logger = Logger.getLogger(ExploreSurvival.class.getName());
-	public static final String version="indev-210729_03";
+	public static Logger logger = Logger.getLogger(ExploreSurvival.class.getName());
+
 	public ExploreSurvival() {
 		running=true;
 		instance=this;
@@ -42,9 +43,9 @@ public class ExploreSurvival extends Thread {
         final int errorCode = GL11.glGetError();
         if (errorCode != 0) {
             final String errorString = GLU.gluErrorString(errorCode);
-            System.out.println("########## GL ERROR ##########");
-            System.out.println("@ " + string);
-            System.out.println(errorCode + ": " + errorString);
+            logger.severe("########## GL ERROR ##########");
+			logger.severe("@ " + string);
+            logger.severe(errorCode + ": " + errorString);
         }
     }
     private static ExploreSurvival instance;
@@ -84,6 +85,11 @@ public class ExploreSurvival extends Thread {
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				logger.severe("Unable to read Settings in " + SETTINGFILE);
+				logger.fine("Cause :" + e.toString());
+				logger.fine("---- Begin Warning");
+				logger.fine("Your Settings cannot be read.");
+				logger.fine("Your Settings will go back to the game's default Settings");
+				logger.fine("---- End Warning");
 				e.printStackTrace();
 			}
 		if(gamesettings==null) {
@@ -94,10 +100,14 @@ public class ExploreSurvival extends Thread {
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				logger.severe("Unable to save Settings in " + SETTINGFILE);
+				logger.fine("Cause :" + e.toString());
+				logger.fine("---- Begin Warning");
+				logger.fine("Your Settings profile cannot be modified.");
+				logger.fine("Your Settings will be restored when the game is closed.");
+				logger.fine("---- End Warning");
 				e.printStackTrace();
 			}
 		}
-		Display.setVSyncEnabled(gamesettings.limitFrames);
 		fontRenderer=new FontRenderer("/default.png", renderEngine);
 		ScaledResolution sr=new ScaledResolution();
 		GL11.glViewport(0, 0, width, height);
@@ -113,7 +123,7 @@ public class ExploreSurvival extends Thread {
 	}
 	public boolean running=false;
 	long start;
-	//int maxframes=60;
+	int maxframes=60;
 	public int width,height;
 	private int frames;
 	public void run() {
@@ -126,7 +136,6 @@ public class ExploreSurvival extends Thread {
 			e.printStackTrace();
 			new PanelCrashReport(e);
 			running=false;
-			return;
 		}
 		try {
 			while(running) {
@@ -174,18 +183,17 @@ public class ExploreSurvival extends Thread {
 	    				}
 	    			}
 	            }
-	            
-				fontRenderer.render("ExploreSurvival "+version+" ("+this.frames+" fps)", 2, 2, 0xFFFFFF);
+				fontRenderer.render("ExploreSurvival indev-210729_07 ("+this.frames+" fps)", 2, 2, 0xFFFFFF);
 				GL11.glPopMatrix();
 				checkGlError("render 2d");
-				/*if(gamesettings.limitFrames) {
+				if(gamesettings.limitFrames) {
 					try {
 						sleep((long) Math.max((1F/maxframes*1000F)-(System.currentTimeMillis()-start), 0));
 					} catch (InterruptedException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
-				}*/
+				}
 				frames++;
 				if(System.currentTimeMillis()-l>=1000L) {
 					this.frames=frames;
@@ -199,7 +207,6 @@ public class ExploreSurvival extends Thread {
 		} catch(Throwable e) {
 			e.printStackTrace();
 			new PanelCrashReport(e);
-			return;
 		}
 	}
     public void toggleFullscreen() {
@@ -223,18 +230,25 @@ public class ExploreSurvival extends Thread {
 		if(!mkdirLogsDir .exists()) {
 			mkdirLogsDir.mkdir(); // 创建目录
 		}
+		LocalDateTime dateTime = LocalDateTime.now(); // get the current time
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-dd-MM-HH.mm.ss");
 		try {
-			fileHandler = new FileHandler(".\\logs\\log-" + new SimpleDateFormat("yyyy-dd-MM-HH.mm.ss").format(new Date(System.currentTimeMillis())) + ".log");
-			logger.info("The log file was successfully written.");
+			fileHandler = new FileHandler(".\\logs\\log-" + dateTime.format(formatter) + ".log");
+			logger.info("Writing to a log file");
 		} catch (IOException e) {
 			logger.severe("Unable to write to log file");
+			logger.fine("Cause : " + e.toString());
+			logger.fine("---- Begin Warning");
+			logger.fine("Your Settings profile cannot be modified.");
+			logger.fine("Your Settings will be restored when the game is closed.");
+			logger.fine("---- End Warning");
 			e.printStackTrace();
 		}
 		logger.setLevel(Level.ALL);
 		fileHandler.setFormatter(new LoggerCustomFormatter());
 		logger.addHandler(fileHandler);
         new ExploreSurvival().start();
-		logger.info("Launching ExploreSurvival "+version);
+		logger.info("Launching ExploreSurvival indev-210729_07");
 		logger.fine("Launching ExploreSurvival in " + ExploreSurvival.class.getName());
     }
 }

@@ -7,7 +7,7 @@ import exploresurvival.game.render.FontRenderer;
 import exploresurvival.game.render.RenderEngine;
 
 public class Button extends Component {
-	// w: 鎸夐挳瀹藉害 h:鎸夐挳楂樺害
+	// w: 按钮宽度 h:按钮高度
 	int x,y,w,h,id;
 	public boolean enable,visible;
 	String text;

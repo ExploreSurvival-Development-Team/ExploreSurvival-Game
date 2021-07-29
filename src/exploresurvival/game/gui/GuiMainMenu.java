@@ -31,6 +31,7 @@ public class GuiMainMenu extends GuiScreen {
 		controls.add(new Button(game,1,10,125,"Settings"));
 		controls.add(new Button(game,2,10,150,"Tutorial"));
 		controls.add(new Button(game,3,10,175,"Exit Game"));
+
 		((Button)controls.get(0)).enable=false;
 		((Button)controls.get(2)).enable=false;
 		new ThreadFetchMessage(this).start();
@@ -57,6 +58,9 @@ public class GuiMainMenu extends GuiScreen {
 	@Override
 	public void render(int mouseX, int mouseY) {
 		super.render(mouseX, mouseY);
+		// user
+		this.drawCenteredString(game.fontRenderer, "Welcome!<USER>", 50, 205, 0xffffff);
+		// logo
 		GL11.glBindTexture(GL11.GL_TEXTURE_2D, game.renderEngine.getTexture("/logo.png"));
 		ShapeRenderer s=ShapeRenderer.instance;
 		GL11.glPushMatrix();

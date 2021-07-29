@@ -14,6 +14,8 @@ import com.google.gson.GsonBuilder;
 import exploresurvival.game.ExploreSurvival;
 import exploresurvival.game.gui.GuiScreen;
 
+import static exploresurvival.game.ExploreSurvival.SETTINGFILE;
+
 public class GameSettings {
 	public int guiScale=0;
 	public boolean limitFrames=true;
@@ -35,7 +37,7 @@ public class GameSettings {
 		}
 	}
 	public void saveSettings() throws Exception {
-		saveSettings(ExploreSurvival.SETTINGFILE);
+		saveSettings(SETTINGFILE);
 	}
 	public static GameSettings loadSettings(File f) throws Exception {
 		Gson gson=new Gson();
@@ -51,7 +53,7 @@ public class GameSettings {
 		}
 	}
 	public static GameSettings loadSettings() throws Exception {
-		return loadSettings(ExploreSurvival.SETTINGFILE);
+		return loadSettings(SETTINGFILE);
 	}
 	public String getSettingName(int id) {
 		switch(id) {
@@ -78,7 +80,6 @@ public class GameSettings {
 			break;
 		case 1:
 			limitFrames=!limitFrames;
-			Display.setVSyncEnabled(limitFrames);
 			break;
 		}
 		if(id==0&&ExploreSurvival.getInstance().currentScreen!=null) {
@@ -98,7 +99,12 @@ public class GameSettings {
 		try {
 			saveSettings();
 		} catch (Exception e) {
-			System.out.println("Faild to save settings.");
+			ExploreSurvival.logger.severe("Unable to save Settings in " + SETTINGFILE);
+			ExploreSurvival.logger.fine("Cause : " + e.toString());
+			ExploreSurvival.logger.fine("---- Begin Warning");
+			ExploreSurvival.logger.fine("Your Settings profile cannot be modified.");
+			ExploreSurvival.logger.fine("Your Settings will be restored when the game is closed.");
+			ExploreSurvival.logger.fine("---- End Warning");
 			e.printStackTrace();
 		}
 	}
