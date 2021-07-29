@@ -199,6 +199,7 @@ public class ExploreSurvival extends Thread {
 		} catch(Throwable e) {
 			e.printStackTrace();
 			new PanelCrashReport(e);
+			return;
 		}
 	}
     public void toggleFullscreen() {
