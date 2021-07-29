@@ -8,16 +8,10 @@ import java.awt.Panel;
 import java.awt.TextArea;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
-import java.util.function.Supplier;
-import java.util.logging.FileHandler;
-import java.util.logging.Logger;
-
 import javax.swing.JFrame;
 
-import exploresurvival.game.ExploreSurvival;
 import org.lwjgl.opengl.Display;
 
 
@@ -33,13 +27,6 @@ public class PanelCrashReport extends Panel {
 		this.setBackground(new Color(0x2e3444));
 		this.setLayout(new BorderLayout());
 		StringWriter sw=new StringWriter();
-		ExploreSurvival.logger.severe("ExploreSurvival has crashed!");
-		ExploreSurvival.logger.severe("----------------------------");
-		ExploreSurvival.logger.severe("ExploreSurvival has stopped running because it encountered a problem.");
-		ExploreSurvival.logger.severe("You can report on https://github.com/ExploreSurvival-Development-Team/ExploreSurvival-Game/issues. There is Game log");
-		ExploreSurvival.logger.fine("--- Begin Error Report");
-		ExploreSurvival.logger.fine("Cause : " + e.toString());
-		ExploreSurvival.logger.fine("--- End Error Report");
 		sw.append("ExploreSurvival has crashed!      \n");
 		sw.append("----------------------------      \n");
 		sw.append("\n");

@@ -53,15 +53,15 @@ public abstract class GuiScreen {
 		for (int i=0;i<controls.size();i++) {
 			controls.get(i).render(mouseX, mouseY);
 		}
-	}
-
-	public void tick() {
 		while (Mouse.next()) {
 			this.mouseEvent();
 		}
 		while (Keyboard.next()) {
 			this.keyboardEvent();
 		}
+	}
+
+	public void tick(float passedTime) {
 		for (int i=0;i<controls.size();i++) {
 			controls.get(i).tick();
 		}

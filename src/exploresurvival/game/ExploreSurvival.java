@@ -12,8 +12,12 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.glu.GLU;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
+import java.util.Random;
+import java.util.UUID;
 import java.util.logging.FileHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -25,13 +29,18 @@ import exploresurvival.game.render.RenderEngine;
 import exploresurvival.game.util.GameSettings;
 import exploresurvival.game.util.PanelCrashReport;
 import exploresurvival.game.util.ScaledResolution;
+import exploresurvival.game.util.Session;
+import exploresurvival.game.util.Timer;
 
 public class ExploreSurvival extends Thread {
 
 	private static FileHandler fileHandler;
 	public static Logger logger = Logger.getLogger(ExploreSurvival.class.getName());
+	public final Session session;
+	public final Timer timer=new Timer(20F);
 
-	public ExploreSurvival() {
+	public ExploreSurvival(Session session) {
+		this.session = session;
 		running=true;
 		instance=this;
 	}
@@ -49,6 +58,7 @@ public class ExploreSurvival extends Thread {
         }
     }
     private static ExploreSurvival instance;
+	public static final String version="indev-210729_07";
 	public RenderEngine renderEngine;
 	public FontRenderer fontRenderer;
 	public GameSettings gamesettings;
@@ -170,7 +180,6 @@ public class ExploreSurvival extends Thread {
 	                int yMouse = screenHeight - Mouse.getY() * screenHeight / this.height - 1;
 	                GL11.glColor4f(1F, 1F, 1F, 1F);
 	            	currentScreen.render(xMouse, yMouse);
-	            	currentScreen.tick();
 	            } else {
 	            	while(Mouse.next()) {
 	    				
@@ -183,7 +192,13 @@ public class ExploreSurvival extends Thread {
 	    				}
 	    			}
 	            }
-				fontRenderer.render("ExploreSurvival indev-210729_07 ("+this.frames+" fps)", 2, 2, 0xFFFFFF);
+	            timer.advanceTime();
+	            if(timer.ticks>0) {
+	            	for(;timer.ticks>0;timer.ticks--) {
+	            		currentScreen.tick(timer.passedTime);
+	            	}
+	            }
+				fontRenderer.render("ExploreSurvival "+version+" ("+this.frames+" fps)", 2, 2, 0xFFFFFF);
 				GL11.glPopMatrix();
 				checkGlError("render 2d");
 				if(gamesettings.limitFrames) {
@@ -230,10 +245,28 @@ public class ExploreSurvival extends Thread {
 		if(!mkdirLogsDir .exists()) {
 			mkdirLogsDir.mkdir(); // 创建目录
 		}
-		LocalDateTime dateTime = LocalDateTime.now(); // get the current time
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-dd-MM-HH.mm.ss");
+		boolean offline=false;
+		String playername;
+		if(args.length>0) {
+			playername=args[0];
+		} else {
+			playername="Player"+System.currentTimeMillis()%1000;
+			offline=true;
+		}
+		String sessionID="";
+		if(args.length>1) {
+			sessionID=args[1];
+		} else offline=true;
+		UUID uuid;
+		if(args.length>2) {
+			uuid=UUID.fromString(args[2]);
+		} else {
+			uuid=UUID.nameUUIDFromBytes(playername.getBytes());
+			offline=true;
+		}
+		Session session=new Session(playername, sessionID, uuid, offline);
 		try {
-			fileHandler = new FileHandler(".\\logs\\log-" + dateTime.format(formatter) + ".log");
+			fileHandler = new FileHandler(".\\logs\\log-" + new SimpleDateFormat("yyyy-dd-MM-HH.mm.ss").format(new Date(System.currentTimeMillis())) + ".log");
 			logger.info("Writing to a log file");
 		} catch (IOException e) {
 			logger.severe("Unable to write to log file");
@@ -247,8 +280,8 @@ public class ExploreSurvival extends Thread {
 		logger.setLevel(Level.ALL);
 		fileHandler.setFormatter(new LoggerCustomFormatter());
 		logger.addHandler(fileHandler);
-        new ExploreSurvival().start();
-		logger.info("Launching ExploreSurvival indev-210729_07");
-		logger.fine("Launching ExploreSurvival in " + ExploreSurvival.class.getName());
+        new ExploreSurvival(session).start();
+		logger.info("Launching ExploreSurvival "+version);
+		//logger.fine("Launching ExploreSurvival in " + ExploreSurvival.class.getName());
     }
 }

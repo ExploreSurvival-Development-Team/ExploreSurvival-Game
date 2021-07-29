@@ -6,13 +6,9 @@ import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
-import java.util.logging.FileHandler;
-import java.util.logging.Logger;
 
 import exploresurvival.game.ExploreSurvival;
 import exploresurvival.game.gui.GuiMainMenu;
-
-import static exploresurvival.game.ExploreSurvival.SETTINGFILE;
 
 public class ThreadFetchMessage extends Thread {
 	private static final URL newsURL;
