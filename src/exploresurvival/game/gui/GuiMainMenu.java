@@ -3,6 +3,7 @@ package exploresurvival.game.gui;
 import exploresurvival.game.ExploreSurvival;
 import exploresurvival.game.render.ShapeRenderer;
 import exploresurvival.game.util.ThreadFetchMessage;
+import exploresurvival.game.world.World;
 
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
@@ -175,7 +176,9 @@ public class GuiMainMenu extends GuiScreen {
 			//while (true) {
 			//	o = new Object[] {o};
 			//}
-			Objects.requireNonNull(null);
+			//Objects.requireNonNull(null);
+			game.world=new World();
+			game.setCurrentScreen(null);
 		}
 		if (button.id == 1) {
 			game.setCurrentScreen(new GuiSettings(game, this));

@@ -30,4 +30,7 @@ public class World {
 	public boolean setBlock(long x,long y,long z,byte id) {
 		return getChunk(x/Chunk.CHUNK_WIDTH,z/Chunk.CHUNK_WIDTH).setBlock((int)x%Chunk.CHUNK_WIDTH, (int)y, (int)z%Chunk.CHUNK_WIDTH,id);
 	}
+	public void tick() {
+		loadChunk(0,0);
+	}
 }

@@ -37,6 +37,7 @@ import exploresurvival.game.util.PanelCrashReport;
 import exploresurvival.game.util.ScaledResolution;
 import exploresurvival.game.util.Session;
 import exploresurvival.game.util.Timer;
+import exploresurvival.game.world.World;
 
 public class ExploreSurvival extends Thread {
 
@@ -184,6 +185,7 @@ public class ExploreSurvival extends Thread {
         GL11.glLoadIdentity();
         GL11.glTranslatef(0.0F, 0.0F, -200.0F);
         GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+        GL11.glClearColor(0F, 0F, 0F, 1F);
 		setCurrentScreen(new GuiMainMenu(this));
 	}
 	public boolean running=false;
@@ -191,6 +193,7 @@ public class ExploreSurvival extends Thread {
 	int maxframes=60;
 	public int width,height;
 	private int frames;
+	public World world;
 	public void run() {
 		long l=System.currentTimeMillis();
 		int frames = 0;
@@ -250,7 +253,7 @@ public class ExploreSurvival extends Thread {
 	            timer.advanceTime();
 	            if(timer.ticks>0) {
 	            	for(;timer.ticks>0;timer.ticks--) {
-	            		currentScreen.tick(timer.passedTime);
+	            		if(currentScreen!=null) currentScreen.tick(timer.passedTime);
 	            	}
 	            }
 				fontRenderer.render("ExploreSurvival "+version+" ("+this.frames+" fps)", 2, 2, 0xFFFFFF);
