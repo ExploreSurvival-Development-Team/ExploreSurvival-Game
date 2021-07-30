@@ -33,7 +33,6 @@ public class HttpUtil {
 		while((line=in.readLine())!=null) {
 			sb.append(line).append("\n");
 		}
-		String s = sb.toString();
-		return s;
+		return sb.toString();
 	}
 }
