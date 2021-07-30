@@ -206,7 +206,7 @@ public class ExploreSurvival extends Thread {
 			running=false;
 		}
 		try {
-			while(running) {
+			if(running) while(running) {
 				start=System.currentTimeMillis();
 				GL11.glClear(256);
 				if((width!=Display.getWidth()||height!=Display.getHeight())&&(Display.getWidth()>0&&Display.getHeight()>0)) {
