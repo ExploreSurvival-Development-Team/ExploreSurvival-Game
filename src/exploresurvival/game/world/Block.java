@@ -14,7 +14,7 @@ public class Block {
         this.name =name;
         this.model =model;
         blockID=id;
-        blockList[id]=this;
+        blockList[id&0xFF]=this;
     }
     public AABB getBlockAABB(BlockPos pos) {
     	return new AABB(pos.x,pos.y,pos.z,pos.x+1,pos.y+1,pos.z+1);

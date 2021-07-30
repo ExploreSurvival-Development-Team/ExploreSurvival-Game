@@ -1,5 +1,7 @@
 package exploresurvival.game;
 
+import java.awt.Graphics;
+import java.awt.image.BufferedImage;
 import java.io.File;
 
 import exploresurvival.game.util.LoggerCustomFormatter;
@@ -12,6 +14,8 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.glu.GLU;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.nio.ByteBuffer;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -21,6 +25,8 @@ import java.util.UUID;
 import java.util.logging.FileHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import javax.imageio.ImageIO;
 
 import exploresurvival.game.gui.GuiScreen;
 import exploresurvival.game.gui.GuiMainMenu;
@@ -48,6 +54,20 @@ public class ExploreSurvival extends Thread {
 	public static ExploreSurvival getInstance() {
 		return instance;
 	}
+	
+	private ByteBuffer readImageToBuffer(BufferedImage bufferedimage) throws IOException {
+		int[] aint = bufferedimage.getRGB(0, 0, bufferedimage.getWidth(), bufferedimage.getHeight(), (int[]) null, 0,
+				bufferedimage.getWidth());
+		ByteBuffer bytebuffer = ByteBuffer.allocate(4 * aint.length);
+
+		for (int i : aint) {
+			bytebuffer.putInt(i << 8 | i >> 24 & 255);
+		}
+
+		bytebuffer.flip();
+		return bytebuffer;
+	}
+	
     private void checkGlError(final String string) {
         final int errorCode = GL11.glGetError();
         if (errorCode != 0) {
@@ -78,6 +98,41 @@ public class ExploreSurvival extends Thread {
 	}
 	private void init() throws LWJGLException {
 		fullscreen=false;
+		InputStream stream=ExploreSurvival.class.getResourceAsStream("/icon.png");
+		if(stream!=null) {
+			ByteBuffer[] arr;
+			String osName = System.getProperty("os.name");
+			try {
+				BufferedImage image=ImageIO.read(stream);
+				if (osName.startsWith("Windows")) {
+					arr=new ByteBuffer[2];
+					BufferedImage img1=new BufferedImage(16,16,BufferedImage.TYPE_INT_ARGB);
+					Graphics g=img1.getGraphics();
+					g.drawImage(image, 0, 0, 16, 16, null);
+					g.dispose();
+					arr[0]=readImageToBuffer(img1);
+					img1=new BufferedImage(32,32,BufferedImage.TYPE_INT_ARGB);
+					g=img1.getGraphics();
+					g.drawImage(image, 0, 0, 32, 32, null);
+					g.dispose();
+					arr[1]=readImageToBuffer(img1);
+				} else if (osName.startsWith("Mac OS X") || osName.startsWith("Darwin")) {
+					arr=new ByteBuffer[1];
+					arr[0]=readImageToBuffer(image);
+				} else {
+					arr=new ByteBuffer[1];
+					BufferedImage img1=new BufferedImage(16,16,BufferedImage.TYPE_INT_ARGB);
+					Graphics g=img1.getGraphics();
+					g.drawImage(image, 0, 0, 16, 16, null);
+					g.dispose();
+					arr[0]=readImageToBuffer(img1);
+				}
+				Display.setIcon(arr);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 		Display.setFullscreen(fullscreen);
 		Display.setTitle("ExploreSurvival");
 		Display.setDisplayMode(new DisplayMode(854,480));

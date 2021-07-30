@@ -8,6 +8,7 @@ import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class GuiMainMenu extends GuiScreen {
 
@@ -97,7 +98,7 @@ public class GuiMainMenu extends GuiScreen {
 		controls.add(new Button(game, 2, 10, 150, "Tutorial"));
 		controls.add(new Button(game, 3, 10, 175, "Exit Game"));
 
-		((Button) controls.get(0)).enable = false;
+		//((Button) controls.get(0)).enable = false;
 		((Button) controls.get(2)).enable = false;
 		new ThreadFetchMessage(this).start();
 		if (messages != null && (width - 20) - (posX + 200) > 8) {
@@ -168,6 +169,14 @@ public class GuiMainMenu extends GuiScreen {
 	@Override
 	public void onButtonClick(Button button) {
 		// TODO Auto-generated method stub
+		if (button.id == 0) {
+			//byte bytearr=new
+			//Object[] o = null;
+			//while (true) {
+			//	o = new Object[] {o};
+			//}
+			Objects.requireNonNull(null);
+		}
 		if (button.id == 1) {
 			game.setCurrentScreen(new GuiSettings(game, this));
 		}
