@@ -175,6 +175,7 @@ public class ExploreSurvival extends Thread {
 			}
 		}
 		fontRenderer=new FontRenderer("/default.png", renderEngine);
+		Display.setVSyncEnabled(gamesettings.limitFrames);
 		ScaledResolution sr=new ScaledResolution();
 		GL11.glViewport(0, 0, width, height);
 		GL11.glClear(256);
@@ -259,14 +260,14 @@ public class ExploreSurvival extends Thread {
 				fontRenderer.render("ExploreSurvival "+version+" ("+this.frames+" fps)", 2, 2, 0xFFFFFF);
 				GL11.glPopMatrix();
 				checkGlError("render 2d");
-				if(gamesettings.limitFrames) {
+				/*if(gamesettings.limitFrames) {
 					try {
 						sleep((long) Math.max((1F/maxframes*1000F)-(System.currentTimeMillis()-start), 0));
 					} catch (InterruptedException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
-				}
+				} */
 				frames++;
 				if(System.currentTimeMillis()-l>=1000L) {
 					this.frames=frames;
