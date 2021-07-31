@@ -254,7 +254,7 @@ public class ExploreSurvival extends Thread {
 	            timer.advanceTime();
 	            if(timer.ticks>0) {
 	            	for(;timer.ticks>0;timer.ticks--) {
-	            		if(currentScreen!=null) currentScreen.tick(timer.passedTime);
+	            		tick();
 	            	}
 	            }
 				fontRenderer.render("ExploreSurvival "+version+" ("+this.frames+" fps)", 2, 2, 0xFFFFFF);
@@ -299,6 +299,12 @@ public class ExploreSurvival extends Thread {
 			fullscreen=!fullscreen;
 		}
 	}
+    public void tick() {
+    	if(currentScreen!=null) currentScreen.tick(timer.passedTime);
+		if(world!=null) {
+			world.tick();
+		}
+    }
 	public static void main(String[] args) {
 		File mkdirLogsDir = new File(".\\logs\\");
 		if(!mkdirLogsDir .exists()) {

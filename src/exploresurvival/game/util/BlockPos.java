@@ -10,6 +10,9 @@ public class BlockPos {
 	public static final byte FACING_EAST=4;
 	public static final byte FACING_UP=5;
 	public static final byte FACING_DOWN=6;
+	public BlockPos(long x,long y,long z) {
+		this(x,y,z,(byte)0,new boolean[6]);
+	}
 	public BlockPos(long x,long y,long z,byte facing,boolean[] enableFacing) {
 		this.x=x;
 		this.y=y;

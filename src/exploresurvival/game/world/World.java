@@ -1,9 +1,15 @@
 package exploresurvival.game.world;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class World {
 	private ArrayList<Chunk> loadedChunks;
+	private Random worldRandom;
+	public World() {
+		loadedChunks=new ArrayList<Chunk>();
+		worldRandom=new Random();
+	}
 	public Chunk getChunk(long x,long z) {
 		for(Chunk c:loadedChunks) {
 			if(c.x==x&&c.z==z) {
@@ -22,7 +28,7 @@ public class World {
 		for(int i=0;i<Chunk.CHUNK_WIDTH;i++) for(int j=0;j<Chunk.CHUNK_WIDTH;j++) for(int k=0;k<20;k++) {
 			chunk[i*Chunk.CHUNK_WIDTH+j*Chunk.CHUNK_WIDTH+k]=1;
 		}
-		return new Chunk(x,z,chunk);
+		return new Chunk(x,z,chunk, this);
 	}
 	public int getBlock(long x,long y,long z) {
 		return getChunk(x/Chunk.CHUNK_WIDTH,z/Chunk.CHUNK_WIDTH).getBlock((int)x%Chunk.CHUNK_WIDTH, (int)y, (int)z%Chunk.CHUNK_WIDTH);
@@ -31,6 +37,12 @@ public class World {
 		return getChunk(x/Chunk.CHUNK_WIDTH,z/Chunk.CHUNK_WIDTH).setBlock((int)x%Chunk.CHUNK_WIDTH, (int)y, (int)z%Chunk.CHUNK_WIDTH,id);
 	}
 	public void tick() {
-		loadChunk(0,0);
+		getChunk(0,0);
+		for (Chunk chunk : loadedChunks) {
+			chunk.tick();
+		}
+	}
+	public Random getWorldRandom() {
+		return worldRandom;
 	}
 }

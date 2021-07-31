@@ -9,8 +9,9 @@ public class Block {
     private Model model;
     private String name;
     public final byte blockID;
-    public final Block stone=new Block(1,"stone",new Model(ExploreSurvival.getInstance().renderEngine.getTexture("/textures/stone.png")));
+    private static final ExploreSurvival game=ExploreSurvival.getInstance();
     public static final Block[] blockList=new Block[256];
+    public static final Block stone=new Block(1,"stone",new Model(game.renderEngine.getTexture("/textures/stone.png")));
 
     public Block(int id,String name,Model model) {
     	this((byte) id,name,model);
@@ -31,5 +32,7 @@ public class Block {
     public String getName() {
     	return name;
     }
-     
+    public void onRandomTick(BlockPos pos) {
+    	
+    }
 }

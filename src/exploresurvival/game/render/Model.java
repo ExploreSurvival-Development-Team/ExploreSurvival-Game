@@ -13,6 +13,7 @@ public class Model {
     }// define model
 
     public Model(int textrue) {
+    	this.faces = new ArrayList<ModelSurface>();
     	byte[] points = new byte[]{0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 1, 0}; // left (3)
         this.faces.add(new ModelSurface(points, textrue, 3));
         points = new byte[]{0, 0, 1, 1, 0, 1, 0, 1, 1, 1, 1, 1}; // right (4)
